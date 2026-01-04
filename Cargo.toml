@@ -1,0 +1,8 @@
+[package]
+name = "discord-project"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+serenity = "0.12"
+dotenv = "0.15"
