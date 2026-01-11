@@ -6,12 +6,18 @@ type Error = Box<dyn std::error::Error + Send + Sync>;
 type Context<'a> = poise::Context<'a, Data, Error>;
 
 #[poise::command(prefix_command, slash_command)]
-async fn register(
+async fn register_league(
     ctx: Context<'_>,
-    #[description = "User to register an account with the bot"] user: serenity::Member
+    #[description = "Full Id - name#tag"] riot_id: String,
 ) -> Result<(), Error> {
-    // Command code here
-    ctx.say("Test response from command_name").await?;
+    let Some((name, tag)) = riot_id.split_once('#') else {
+        // If no tag is given, send a message and then bail
+        ctx.say("Riot ID must include a `#tag`").await?;
+        return Ok(());
+    };
+    // For now just print the name and tag but we need to store this in the db
+    // but before then we have to design the schema and what we want to store
+    println!("{} {}", name, tag);
     Ok(())
 }
 
@@ -31,7 +37,7 @@ async fn main() {
     let framework = poise::Framework
         ::builder()
         .options(poise::FrameworkOptions {
-            commands: vec![register()],
+            commands: vec![register_league()],
             ..Default::default()
         })
         .setup(|ctx, _ready, framework| {
