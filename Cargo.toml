@@ -8,3 +8,6 @@ serenity = "0.12"
 dotenv = "0.15"
 tokio = { version = "1", features = ["full"] }
 poise = "0.6"
+rusqlite = { version = "0.28", features = ["bundled"] }
+r2d2 = "0.8"
+r2d2_sqlite = "0.21"
